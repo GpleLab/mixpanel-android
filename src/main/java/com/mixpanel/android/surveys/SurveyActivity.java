@@ -294,9 +294,12 @@ public class SurveyActivity extends Activity {
                 SurveyActivity.this.finish();
             }
         });
-        alertBuilder.setCancelable(false);
-        mDialog = alertBuilder.create();
-        mDialog.show();
+//        alertBuilder.setCancelable(false);
+//        mDialog = alertBuilder.create();
+//        mDialog.show();
+        SurveyActivity.this.findViewById(R.id.com_mixpanel_android_activity_survey_id).setVisibility(View.VISIBLE);
+        mSurveyBegun = true;
+        showQuestion(mCurrentQuestion);
     }
 
     @Override

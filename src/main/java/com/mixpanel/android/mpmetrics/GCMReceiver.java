@@ -2,6 +2,7 @@ package com.mixpanel.android.mpmetrics;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -16,6 +17,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
+import com.mixpanel.android.R;
 import com.mixpanel.android.mpmetrics.MixpanelAPI.InstanceProcessor;
 
 import java.util.HashMap;
@@ -152,11 +154,11 @@ public class GCMReceiver extends BroadcastReceiver {
         }
 
         if (notificationIcon == -1 && null != appInfo) {
-            notificationIcon = appInfo.icon;
+            notificationIcon = R.drawable.ic_todait_launcher;
         }
 
         if (notificationIcon == -1) {
-            notificationIcon = android.R.drawable.sym_def_app_icon;
+            notificationIcon = R.drawable.ic_todait_launcher;
         }
 
         if (null == notificationTitle && null != appInfo) {
@@ -258,12 +260,13 @@ public class GCMReceiver extends BroadcastReceiver {
     @TargetApi(9)
     private Notification makeNotificationSDKLessThan11(Context context, PendingIntent intent, NotificationData notificationData) {
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(context).
-                setSmallIcon(notificationData.icon).
-                setTicker(notificationData.message).
-                setWhen(System.currentTimeMillis()).
-                setContentTitle(notificationData.title).
-                setContentText(notificationData.message).
-                setContentIntent(intent);
+                setSmallIcon( R.drawable.ic_notification_app_icon ).
+				setLargeIcon( BitmapFactory.decodeResource( context.getResources(), notificationData.icon ) ).
+                setTicker( notificationData.message ).
+                setWhen( System.currentTimeMillis() ).
+                setContentTitle( notificationData.title ).
+                setContentText( notificationData.message ).
+                setContentIntent( intent );
         final Notification n = builder.getNotification();
         n.flags |= Notification.FLAG_AUTO_CANCEL;
         return n;
@@ -273,12 +276,13 @@ public class GCMReceiver extends BroadcastReceiver {
     @TargetApi(11)
     private Notification makeNotificationSDK11OrHigher(Context context, PendingIntent intent, NotificationData notificationData) {
         final Notification.Builder builder = new Notification.Builder(context).
-                setSmallIcon(notificationData.icon).
-                setTicker(notificationData.message).
-                setWhen(System.currentTimeMillis()).
-                setContentTitle(notificationData.title).
-                setContentText(notificationData.message).
-                setContentIntent(intent);
+                setSmallIcon( R.drawable.ic_notification_app_icon ).
+				setLargeIcon( BitmapFactory.decodeResource( context.getResources(), notificationData.icon ) ).
+                setTicker( notificationData.message ).
+                setWhen( System.currentTimeMillis() ).
+                setContentTitle( notificationData.title ).
+                setContentText( notificationData.message ).
+                setContentIntent( intent );
 
         final Notification n = builder.getNotification();
         n.flags |= Notification.FLAG_AUTO_CANCEL;
@@ -289,13 +293,14 @@ public class GCMReceiver extends BroadcastReceiver {
     @TargetApi(16)
     private Notification makeNotificationSDK16OrHigher(Context context, PendingIntent intent, NotificationData notificationData) {
         final Notification.Builder builder = new Notification.Builder(context).
-                setSmallIcon(notificationData.icon).
-                setTicker(notificationData.message).
-                setWhen(System.currentTimeMillis()).
-                setContentTitle(notificationData.title).
-                setContentText(notificationData.message).
-                setContentIntent(intent).
-                setStyle(new Notification.BigTextStyle().bigText(notificationData.message));
+                setSmallIcon( R.drawable.ic_notification_app_icon ).
+                setLargeIcon( BitmapFactory.decodeResource( context.getResources(), notificationData.icon ) ).
+                setTicker( notificationData.message ).
+                setWhen( System.currentTimeMillis() ).
+                setContentTitle( notificationData.title ).
+                setContentText( notificationData.message ).
+                setContentIntent( intent ).
+                setStyle( new Notification.BigTextStyle().bigText( notificationData.message ) );
 
         final Notification n = builder.build();
         n.flags |= Notification.FLAG_AUTO_CANCEL;
